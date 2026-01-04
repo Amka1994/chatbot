@@ -129,13 +129,15 @@ def webhook():
         return jsonify({"status": "ok"}), 200
 
 # Production-д зориулсан сервер (локал туршилтад Flask dev сервер хэрэглэ)
-if __name__ == '__main__':
-    debug_mode = os.getenv("DEBUG", "True").lower() == "true"
+if __name__ == "__main__":
+    debug_mode = os.getenv("DEBUG", "false").lower() == "true"
+
     if debug_mode:
         print("🚀 Development сервер аслаа – http://127.0.0.1:5000")
-        app.run(host="0.0.0.0", port=5000, debug=True, threaded=True)
+        app.run(host="0.0.0.0", port=5000, debug=True)
     else:
-        # Production-д Waitress ашигла (Render дээр автоматаар ажиллана)
         from waitress import serve
         print("🚀 Production сервер аслаа – http://0.0.0.0:5000")
-        serve(app, host="0.0.0.0", port=5000, threads=16)
+        serve(app, host="0.0.0.0", port=5000)
+
+
